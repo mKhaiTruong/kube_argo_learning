@@ -1,4 +1,4 @@
-apiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha
 kind: Application
 metadata:
   name: myapp-argo-application
@@ -7,17 +7,18 @@ spec:
   project: default
 
   source:
-    repoURL: https://gitlab.com/nanuchi/argocd-app-config.git
+    repoURL: https://gitlab.com/minhkhai0402/argocd-app-config.git
     targetRevision: HEAD
     path: dev
-  destination: 
+  
+  destination:
     server: https://kubernetes.default.svc
     namespace: myapp
-
+  
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
 
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
