@@ -104,6 +104,14 @@ Xóa Pod hay StatefulSet không xóa PVC — data vẫn còn. Phải xóa PVC th
 
 ---
 
+## HPA (Horizontal Pod Autoscaler)
+ 
+HPA tự động scale số lượng Pod dựa trên CPU hoặc memory usage. Thay vì manually tăng replicas, HPA theo dõi metrics và tự quyết định.
+
+HPA chỉ scale Pod — Deployment và ReplicaSet vẫn là 1 object duy nhất, chỉ số Pod thay đổi. Khi CPU vượt ngưỡng thì scale up, khi traffic giảm thì tự scale down về minReplicas.
+
+---
+
 ## Tools
  
 - **kubectl** — CLI để interact với cluster
