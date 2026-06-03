@@ -112,6 +112,27 @@ HPA chỉ scale Pod — Deployment và ReplicaSet vẫn là 1 object duy nhất,
 
 ---
 
+## Ingress & Ingress Controller
+ 
+Ingress là object định nghĩa routing rules — cho phép dùng domain thật, port 80/443, và route nhiều service qua 1 entrypoint duy nhất thay vì dùng NodePort.
+
+```
+rules:
+  - host: myapp.com
+    http:
+      paths:
+        - path: /api
+          backend: grade-submission-api:3000
+        - path: /
+          backend: grade-submission-portal:5001
+```
+
+Ingress Controller là thằng thực thi các rules đó — Ingress chỉ là config, Controller mới là phần thật sự xử lý traffic. K8s không có sẵn Ingress Controller, phải tự cài. Phổ biến nhất là nginx-ingress
+
+Trên cloud thật, Ingress Controller được expose qua LoadBalancer và tự assign IP public. Trên minikube/WSL thì EXTERNAL-IP sẽ <pending> — dùng port-forward để access local.
+
+---
+
 ## Tools
  
 - **kubectl** — CLI để interact với cluster
