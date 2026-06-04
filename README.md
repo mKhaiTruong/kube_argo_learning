@@ -133,6 +133,38 @@ Trên cloud thật, Ingress Controller được expose qua LoadBalancer và tự
 
 ---
 
+## RBAC (Role-Based Access Control)
+
+Hệ thống phân quyền trong k8s — quyết định "ai được làm gì với resource nào". Mặc định Pod dùng ServiceAccount default, không có quyền gì cả.
+
+```
+ServiceAccount   >  identity (của Pod hoặc client)
+Role/ClusterRole >  danh sách quyền được làm
+RoleBinding      >  gắn ServiceAccount với Role
+```
+Role là namespace-scoped, ClusterRole là cluster-wide.
+
+#### NOTE: Nguyên tắc quan trọng nhất: chỉ cấp đúng quyền cần thiết, không hơn. Không dùng cluster-admin trong production.
+
+Section-nine có 2 ServiceAccount với vai trò khác nhau:
+- grade-submission-api-proxy — identity của Pod, cần quyền gọi tokenreviews API để proxy verify token từ request đến.
+- grade-service-account — identity của client, cần quyền gọi các API endpoints của app.
+
+
+*kube-rbac-proxy là sidecar container đứng trước app, enforce RBAC trên từng request:*
+```
+Request + token
+        ↓
+proxy verify token qua tokenreviews API
+        ↓ có quyền
+app :3000
+        ↓ không có quyền
+403 Forbidden
+```
+Proxy cần chạy với ServiceAccount có quyền tokenreviews — nên Deployment phải khai báo serviceAccountName: grade-submission-api-proxy.
+
+---
+
 ## Tools
  
 - **kubectl** — CLI để interact với cluster

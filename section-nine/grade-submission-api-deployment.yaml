@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grade-submission-api
+  namespace: grade-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: grade-submission-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: grade-submission
+        app.kubernetes.io/instance: grade-submission-api
+    spec:
+      serviceAccountName: grade-submission-api-proxy
+      containers:
+        - name: grade-submission-api
+          image: rslim087/kubernetes-course-grade-submission-api:stateless
+          ports:
+            - containerPort: 3000
+        - name: kube-rbac-proxy
+          image: quay.io/brancz/kube-rbac-proxy:v0.14.0
+          args:
+            - "--secure-listen-address=0.0.0.0:8443"
+            - "--upstream=http://127.0.0.1:3000/"
+            - "--logtostderr=true"
+            - "--v=10"
+          ports:
+            - containerPort: 8443
+              name: https
