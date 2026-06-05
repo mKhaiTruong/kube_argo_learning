@@ -165,6 +165,11 @@ Proxy cần chạy với ServiceAccount có quyền tokenreviews — nên Deploy
 
 ---
 
+## ArgoCD and Helm
+Nội dung và note được ghi chú tại section-ten/README.md cho dễ đọc
+
+---
+
 ## Tools
  
 - **kubectl** — CLI để interact với cluster
