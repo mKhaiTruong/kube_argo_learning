@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/mKhaiTruong/kube_argo_learning.git
     targetRevision: HEAD
-    path: gitops/basic
+    path: section-ten/gitops/basic
   destination:
     server: https://kubernetes.default.svc
     namespace: grade-demo
