@@ -1,0 +1,19 @@
+replicaCount: 2
+
+image:
+  repository: rslim087/kubernetes-course-grade-submission-api
+  tag: stateless
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3000
+  targetPort: 3000
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "100m"
+  limits:
+    memory: "128Mi"
+    cpu: "200m"

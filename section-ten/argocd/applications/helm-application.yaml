@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grade-submission-helm
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mKhaiTruong/kube_argo_learning.git
+    targetRevision: HEAD
+    path: section-ten/helm/grade-submission
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: grade-helm-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
