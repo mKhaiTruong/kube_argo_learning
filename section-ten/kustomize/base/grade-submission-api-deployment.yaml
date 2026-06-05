@@ -6,7 +6,7 @@ metadata:
   labels:
     app: grade-submission
 spec:
-  replicase: 3
+  replicas: 3
   selector:
     matchLabels:
       app: grade-submission
